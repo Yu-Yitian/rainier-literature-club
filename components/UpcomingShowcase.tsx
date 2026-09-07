@@ -72,6 +72,7 @@ function showcaseCards(
 }
 
 const CARD_SCROLL_PHASES = 3
+const UPCOMING_SCROLL_SPEED = 1.5
 const CARD_SCALE = 1.1
 const DEFAULT_POSTER_RATIO = 3 / 4
 const MIN_COPY_WIDTH = 360
@@ -217,12 +218,18 @@ export default function UpcomingShowcase({
       const bounds = section.getBoundingClientRect()
       const nextViewportHeight = window.innerHeight
       const scrollRange = Math.max(1, section.offsetHeight - nextViewportHeight)
+      const flowLayoutActive = section.classList.contains('is-flow')
       setProgress(Math.max(0, Math.min(1, -bounds.top / scrollRange)))
-      setGridProgress(Math.max(0, Math.min(1, (nextViewportHeight - bounds.top) / nextViewportHeight)))
+      setGridProgress(clamp(
+        0,
+        ((nextViewportHeight - bounds.top) / nextViewportHeight)
+          * (flowLayoutActive ? 1 : UPCOMING_SCROLL_SPEED),
+        1,
+      ))
       setViewportWidth(window.innerWidth)
       setViewportHeight(nextViewportHeight)
 
-      if (section.classList.contains('is-flow')) {
+      if (flowLayoutActive) {
         const cardsInFlow = Array.from(section.querySelectorAll<HTMLElement>('.home-upcoming-card'))
         const viewportCenter = nextViewportHeight / 2
         let activeCard: HTMLElement | null = null
@@ -293,7 +300,7 @@ export default function UpcomingShowcase({
       ref={sectionRef}
       className={`home-upcoming-section${isFlowLayout ? ' is-flow' : ''}`}
       style={{
-        '--home-upcoming-steps': cards.length * CARD_SCROLL_PHASES + 1,
+        '--home-upcoming-steps': cards.length * CARD_SCROLL_PHASES / UPCOMING_SCROLL_SPEED + 1,
         '--home-upcoming-grid-progress': gridProgress,
         ...(cardHeight > 0 ? { '--home-upcoming-card-height': `${cardHeight}px` } : {}),
       } as CSSProperties}
