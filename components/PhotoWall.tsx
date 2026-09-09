@@ -344,7 +344,9 @@ export default function PhotoWall({ events, copy, activityLanguageCopy, allowFal
               aria-label={`${copy.closeDetails}: ${selectedEvent.title}`}
               onClick={closeDialog}
             >
-              <span aria-hidden="true">×</span>
+              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M3 3L15 15M15 3L3 15" stroke="currentColor" strokeWidth="1" />
+              </svg>
             </button>
 
             <div

@@ -46,7 +46,7 @@ export default function ImageCarousel({ copy }: { copy: Dictionary['carousel'] }
 
   return (
     <div
-      style={{ position: 'relative', width: '100%', aspectRatio: '3/2', overflow: 'hidden', borderRadius: '4px' }}
+      style={{ position: 'relative', width: '100%', aspectRatio: '3/2', overflow: 'hidden', borderRadius: 'var(--container-radius)' }}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
