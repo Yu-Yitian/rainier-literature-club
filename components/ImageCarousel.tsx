@@ -69,9 +69,9 @@ export default function ImageCarousel({ copy }: { copy: Dictionary['carousel'] }
       ))}
 
       {[
-        { direction: 'previous', label: copy.previous, side: 'left', icon: '‹' },
-        { direction: 'next', label: copy.next, side: 'right', icon: '›' },
-      ].map(({ direction, label, side, icon }) => (
+        { direction: 'previous', label: copy.previous, side: 'left' },
+        { direction: 'next', label: copy.next, side: 'right' },
+      ].map(({ direction, label, side }) => (
         <button
           key={direction}
           type="button"
@@ -95,10 +95,6 @@ export default function ImageCarousel({ copy }: { copy: Dictionary['carousel'] }
             borderRadius: '50%',
             background: 'rgba(28,34,32,0.42)',
             color: '#fff',
-            fontFamily: 'var(--font-label)',
-            fontSize: '34px',
-            fontWeight: 300,
-            lineHeight: 1,
             cursor: 'pointer',
             opacity: paused ? 1 : 0,
             pointerEvents: paused ? 'auto' : 'none',
@@ -106,7 +102,15 @@ export default function ImageCarousel({ copy }: { copy: Dictionary['carousel'] }
             zIndex: 10,
           }}
         >
-          <span aria-hidden="true" style={{ transform: 'translateY(-1px)' }}>{icon}</span>
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path
+              d={direction === 'previous' ? 'M12 2L6 9L12 16' : 'M6 2L12 9L6 16'}
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </button>
       ))}
 
